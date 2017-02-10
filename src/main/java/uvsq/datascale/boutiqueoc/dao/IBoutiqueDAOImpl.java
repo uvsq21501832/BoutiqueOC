@@ -47,14 +47,16 @@ public class IBoutiqueDAOImpl implements IBoutiqueDAO{
 
 	@Override
 	public int ajouterarticle(Article i, int idCategorie) {
-		// TODO Auto-generated method stub
-		return 0;
+		CategorieArticle c=getCategorie(idCategorie);
+		i.setIdCategorie(c);
+		em.persist(i);
+		return i.getIdArticle();
 	}
 
 	@Override
 	public List<Article> listArticles() {
-		// TODO Auto-generated method stub
-		return null;
+		Query req=em.createQuery("select a from Article a");
+		return req.getResultList();
 	}
 
 	@Override
@@ -77,19 +79,19 @@ public class IBoutiqueDAOImpl implements IBoutiqueDAO{
 
 	@Override
 	public Article getArticle(int idArticle) {
-		// TODO Auto-generated method stub
-		return null;
+		return em.find(Article.class, idArticle);
 	}
 
 	@Override
 	public void supprimerArticle(int idArticle) {
-		// TODO Auto-generated method stub
+		Article a=em.find(Article.class, idArticle);
+		em.remove(a);
 		
 	}
 
 	@Override
 	public void modifierarticle(Article i) {
-		// TODO Auto-generated method stub
+		em.merge(i);
 		
 	}
 

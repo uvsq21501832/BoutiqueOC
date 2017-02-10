@@ -5,7 +5,7 @@
 
 <html>
 <head>
-<title>Admin Catégorie</title>
+<title>Admin Produits</title>
 <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css"
 	rel="stylesheet">
 <link rel="stylesheet" type="text/css"
@@ -34,7 +34,7 @@
 							<li><a href="#">Tous les produits</a></li>
 						</ul></li>
 
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
+					<li class="dropdown"><a href="adminCat" class="dropdown-toggle"
 						data-toggle="dropdown">Catégories <b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<li><a href="adminCat">Ajouter une Catégorie</a></li>
@@ -46,17 +46,17 @@
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown">Gestion Commandes <b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><a href="adminCat">Validation</a></li>
-							<li><a href="adminCat">Annulation</a></li>
-							<li><a href="adminCat">Toutes les Commandes</a></li>
+							<li><a href="#">Validation</a></li>
+							<li><a href="#">Annulation</a></li>
+							<li><a href="#">Toutes les Commandes</a></li>
 						</ul></li>
 
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown">Gestion Livraison <b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><a href="adminCat">Livraisons Effectuées</a></li>
-							<li><a href="adminCat">Livraisons En Attentes</a></li>
-							<li><a href="adminCat">Toutes les Livraisons</a></li>
+							<li><a href="#">Livraisons Effectuées</a></li>
+							<li><a href="#">Livraisons En Attentes</a></li>
+							<li><a href="#">Toutes les Livraisons</a></li>
 						</ul></li>
 
 					<li><a href="#">Fidélité</a></li>
@@ -81,18 +81,18 @@
 
 	<!--  debut corps -->
 
-	<div id="formCat" class="cadre">
-		<f:form  class="form-horizontal" modelAttribute="categorie" action="saveCat" method="post"
+	<div id="formProd" class="cadre">
+		<f:form  class="form-horizontal" modelAttribute="produit" action="saveProd" method="post"
 			enctype="multipart/form-data">
 			<table >
 				<tr>
-					<td>Catégorie</td>
-					<td>${categorie.idCategorie}<f:input type="hidden"
-							path="idCategorie" /></td>
-					<td><f:errors path="idCategorie"></f:errors></td>
+					<td>Produit</td>
+					<td>${produit.idArticle}<f:input type="hidden"
+							path="idArticle" /></td>
+					<td><f:errors path="idArticle"></f:errors></td>
 				</tr>
 				<tr>
-					<td>Nom Catégorie</td>
+					<td>Nom Article</td>
 					<td><f:input path="nom" /></td>
 					<td><f:errors path="nom"></f:errors></td>
 				</tr>
@@ -102,9 +102,19 @@
 					<td><f:errors path="description"></f:errors></td>
 				</tr>
 				<tr>
+					<td>Disponibilite</td>
+					<td><form:checkbox path="disponibilite" /></td>
+					<td><f:errors path="disponibilite"></f:errors></td>
+				</tr>
+				<tr>
+					<td>Prix</td>
+					<td><f:input path="prix" /></td>
+					<td><f:errors path="prix"></f:errors></td>
+				</tr>
+				<tr>
 					<td>Photo</td>
-					<c:if test="${categorie.idCategorie!=null}">
-						<td><img src="photoCat?idCat=${categorie.idCategorie}"></td>
+					<c:if test="${produit.idArticle!=null}">
+						<td><img src="photoProd?idProd=${produit.idArticle}"></td>
 					</c:if>
 					<td><input type="file"  class="filestyle" name="file"></td>
 				</tr>
@@ -115,24 +125,28 @@
 		</f:form>
 
 	</div>
-	<div id="tabCategories" class="cadre">
+	<div id="tabProduits" class="cadre">
 		<table class="table table-striped table-bordered table-condensed">
 			<tr>
 				<th>ID</th>
-				<th>NOM CAT</th>
+				<th>NOM PRODUIT</th>
 				<th>DESCRIPTION</th>
+				<th>DISPONIBILITE</th>
+				<th>PRIX</th>
 				<th>PHOTO</th>
 				<th>SUPPRIMER</th>
 				<th>EDITER</th>
 			</tr>
-			<c:forEach items="${categories}" var="cat">
+			<c:forEach items="${produits}" var="prod">
 				<tr>
-					<td>${cat.idCategorie}</td>
-					<td>${cat.nom}</td>
-					<td>${cat.description}</td>
-					<td><img src="photoCat?idCat=${cat.idCategorie}"></td>
-					<td><a href="suppCat?idCat=${cat.idCategorie}"><span class="glyphicon glyphicon-remove"></span>Supprimer</a></td>
-					<td><a href="editCat?idCat=${cat.idCategorie}"><span class="glyphicon glyphicon-pencil"></span>Edit</a></td>
+					<td>${prod.idArticle}</td>
+					<td>${prod.nom}</td>
+					<td>${prod.description}</td>
+					<td>${prod.disponibilite}</td>
+					<td>${prod.prix}</td>
+					<td><img src="photoProd?idProd=${prod.idArticle}"></td>
+					<td><a href="suppProd?idProd=${prod.idArticle}"><span class="glyphicon glyphicon-remove"></span>Supprimer</a></td>
+					<td><a href="editProd?idProd=${prod.idArticle}"><span class="glyphicon glyphicon-pencil"></span>Edit</a></td>
 				</tr>
 			</c:forEach>
 		</table>

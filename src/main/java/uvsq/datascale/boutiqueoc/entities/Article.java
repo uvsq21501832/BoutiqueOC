@@ -10,9 +10,12 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -38,15 +41,24 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Article implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "IdArticle")
     private Integer idArticle;
+    @Column(name = "Nom")
+    private String nom;
     @Column(name = "Description")
     private String description;
     @Column(name = "Prix")
     private Long prix;
     @Column(name = "Disponibilite")
     private Short disponibilite;
+    
+    @Column(name = "NomPhoto")
+    private String nomPhoto;
+    @Lob
+    private byte[] photo;
+    
     @JoinTable(name = "LignePanier", joinColumns = {
         @JoinColumn(name = "IdArticle", referencedColumnName = "IdArticle")}, inverseJoinColumns = {
         @JoinColumn(name = "IdPanier", referencedColumnName = "IdPanier")})
@@ -68,8 +80,35 @@ public class Article implements Serializable {
 
     public Article() {
     }
+    
 
-    public Article(Integer idArticle) {
+    public Article(String description/*, Long prix, Short disponibilite*/) {
+		super();
+		this.description = description;
+		/*this.prix = prix;
+		this.disponibilite = disponibilite;*/
+	}
+    
+	public Article(String nom, String description, Long prix, Short disponibilite) {
+		super();
+		this.nom = nom;
+		this.description = description;
+		this.prix = prix;
+		this.disponibilite = disponibilite;
+	}
+
+
+	public String getNom() {
+		return nom;
+	}
+
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+
+	public Article(Integer idArticle) {
         this.idArticle = idArticle;
     }
 
@@ -104,8 +143,30 @@ public class Article implements Serializable {
     public void setDisponibilite(Short disponibilite) {
         this.disponibilite = disponibilite;
     }
+    
+    
+    
+    public String getNomPhoto() {
+		return nomPhoto;
+	}
 
-    @XmlTransient
+
+	public void setNomPhoto(String nomPhoto) {
+		this.nomPhoto = nomPhoto;
+	}
+
+
+	public byte[] getPhoto() {
+		return photo;
+	}
+
+
+	public void setPhoto(byte[] photo) {
+		this.photo = photo;
+	}
+
+
+	@XmlTransient
     public Collection<Panier> getPanierCollection() {
         return panierCollection;
     }

@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -43,18 +44,38 @@ public class CategorieArticle implements Serializable {
     private String nom;
     @Column(name = "Description")
     private String description;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCategorie")
+    @Column(name = "NomPhoto")
+    private String nomPhoto;
+    @Lob
+    private byte[] photo;
+    
+    public String getNomPhoto() {
+		return nomPhoto;
+	}
+
+	public void setNomPhoto(String nomPhoto) {
+		this.nomPhoto = nomPhoto;
+	}
+
+	public byte[] getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(byte[] photo) {
+		this.photo = photo;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "idCategorie")
     private Collection<Article> articleCollection;
 
     public CategorieArticle() {
+    	
     }
 
     public CategorieArticle(Integer idCategorie) {
         this.idCategorie = idCategorie;
     }
 
-    
-    
     public CategorieArticle(/*Integer idCategorie,*/ String nom, String description) {
 		super();
 		//this.idCategorie = idCategorie;
